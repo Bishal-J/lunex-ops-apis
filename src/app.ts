@@ -5,7 +5,7 @@ import express, {
   type Express,
 } from "express";
 import morgan from "morgan";
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
 import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import hpp from "hpp";
@@ -45,11 +45,31 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  cors({
-    origin: "https://admin.lunex-ops.com",
-  }),
-);
+const allowedOrigins: string[] = [
+  "https://admin.lunex-ops.com",
+  "https://lunex-ops.com",
+];
+
+const corsOptions: CorsOptions = {
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void,
+  ) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
+      callback(null, true);
+      return;
+    }
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 
 app.use("/api/v1/dashboards", dashboardsRoutes);
 app.use("/api/v1/users", usersRoutes);
