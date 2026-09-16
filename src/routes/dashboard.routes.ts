@@ -4,7 +4,7 @@ import { getDashboard } from "../controllers/dashboard/dashboard.controllers.js"
 
 import { authorize, protectRoute } from "../middleware/auth.middleware.js";
 
-import { RoleType } from "../../generated/prisma/enums.js";
+import { RoleType } from "../generated/prisma/enums.js";
 
 const router = Router();
 

@@ -7,7 +7,7 @@ import { AppError } from "../../utils/appError.js";
 import { comparePassword, hashPassword } from "../../utils/password.js";
 import crypto from "crypto";
 import { sendEmail } from "../../utils/email.js";
-import { RoleType } from "../../../generated/prisma/enums.js";
+import { RoleType } from "../../generated/prisma/enums.js";
 
 interface ResetPasswordParams {
   token: string;

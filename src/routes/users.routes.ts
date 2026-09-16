@@ -20,7 +20,7 @@ import {
   updatePassword,
 } from "../controllers/users/auth.controllers.js";
 
-import { RoleType } from "../../generated/prisma/enums.js";
+import { RoleType } from "../generated/prisma/enums.js";
 import { authorize, protectRoute } from "../middleware/auth.middleware.js";
 
 const router = Router();

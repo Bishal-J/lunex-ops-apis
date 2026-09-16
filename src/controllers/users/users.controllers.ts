@@ -5,7 +5,7 @@ import { AppError } from "../../utils/appError.js";
 import { hashPassword } from "../../utils/password.js";
 import { prisma } from "../../lib/prisma.js";
 
-import { RoleType } from "../../../generated/prisma/enums.js";
+import { RoleType } from "../../generated/prisma/enums.js";
 
 type UserParams = {
   id: string;

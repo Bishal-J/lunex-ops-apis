@@ -4,8 +4,8 @@ import { prisma } from "../../lib/prisma.js";
 import catchAsync from "../../utils/catchAsync.js";
 import { AppError } from "../../utils/appError.js";
 
-import { LeadStatus } from "../../../generated/prisma/enums.js";
-import { Prisma } from "../../../generated/prisma/client.js";
+import { LeadStatus } from "../../generated/prisma/enums.js";
+import { Prisma } from "../../generated/prisma/client.js";
 
 type LeadParams = {
   id: string;

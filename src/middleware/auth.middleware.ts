@@ -1,5 +1,5 @@
 import { type Request, type NextFunction, type Response } from "express";
-import { RoleType } from "../../generated/prisma/enums.js";
+import { RoleType } from "../generated/prisma/enums.js";
 import { AppError } from "../utils/appError.js";
 import catchAsync from "../utils/catchAsync.js";
 import { verifyToken } from "../utils/jwt.js";

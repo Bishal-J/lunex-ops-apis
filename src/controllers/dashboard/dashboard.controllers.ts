@@ -3,7 +3,7 @@ import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma.js";
 import catchAsync from "../../utils/catchAsync.js";
 
-import { ContactStatus, LeadStatus } from "../../../generated/prisma/enums.js";
+import { ContactStatus, LeadStatus } from "../../generated/prisma/enums.js";
 
 /*
  * ─────────────────────────────────────────────

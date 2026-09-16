@@ -4,7 +4,7 @@ import { prisma } from "../../lib/prisma.js";
 import catchAsync from "../../utils/catchAsync.js";
 import { AppError } from "../../utils/appError.js";
 
-import { ContactStatus } from "../../../generated/prisma/enums.js";
+import { ContactStatus } from "../../generated/prisma/enums.js";
 
 type SpamParams = {
   id: string;
