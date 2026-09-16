@@ -1,0 +1,136 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ProjectType {
+  WEBSITE
+  WEB_APPLICATION
+  SAAS_MVP
+  EXISTING_PRODUCT
+  ONGOING_DEVELOPMENT
+  NOT_SURE
+}
+
+enum ContactStatus {
+  NEW
+  CONVERTED
+  SPAM
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL
+  WON
+  LOST
+}
+
+enum RoleType {
+  SUPER_ADMIN
+  ADMIN
+  MODERATOR
+  USER
+}
+
+model Contact {
+  id              String        @id @default(cuid())
+  name            String
+  email           String
+  phone           String?
+
+  company         String?
+  website         String?
+  industry        String?
+
+  projectType     ProjectType   @default(NOT_SURE)
+  budget          String?
+  timeline        String?
+  projectDetails  String
+  referral        String?
+
+  status          ContactStatus @default(NEW)
+  rejectionReason String?
+  rejectedAt      DateTime?
+
+  lead            Lead?
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([projectType])
+  @@index([createdAt])
+}
+
+model Lead {
+  id              String     @id @default(cuid())
+
+  contactId       String     @unique
+  contact         Contact    @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  status          LeadStatus @default(NEW)
+
+  assignedToId    String?
+  assignedTo      User?      @relation("AssignedLeads", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  estimatedValue  Decimal?   @db.Decimal(12, 2)
+
+  lastContactedAt DateTime?
+  nextFollowUpAt  DateTime?
+
+  notes           String?
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([status])
+  @@index([assignedToId])
+  @@index([nextFollowUpAt])
+  @@index([createdAt])
+}
+
+model User {
+  id                   String    @id @default(cuid())
+  username             String    @unique
+  email                String    @unique
+  name                 String?
+  photo                String?
+
+  passwordHash         String
+  passwordChangedAt    DateTime?
+  passwordResetToken   String?
+  passwordResetExpires DateTime?
+
+  isActive             Boolean   @default(true)
+  role                 RoleType  @default(USER)
+
+  assignedLeads        Lead[]    @relation("AssignedLeads")
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([role])
+  @@index([isActive])
+}
+
+model GeneralSettings {
+  id          String   @id @default("singleton")
+
+  agencyName  String?
+  agencyEmail String?
+  agencyPhone String?
+  websiteUrl  String?
+
+  timezone    String   @default("Asia/Kolkata")
+  currency    String   @default("INR")
+
+  updatedAt   DateTime @updatedAt
+}

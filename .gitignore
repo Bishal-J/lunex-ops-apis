@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+.DS_Store
+/generated/prisma
+
+/C:/Program Files/Git/src/generated/prisma
