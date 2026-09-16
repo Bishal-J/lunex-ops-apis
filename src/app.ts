@@ -45,7 +45,11 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://admin.lunex-ops.com",
+  }),
+);
 
 app.use("/api/v1/dashboards", dashboardsRoutes);
 app.use("/api/v1/users", usersRoutes);
